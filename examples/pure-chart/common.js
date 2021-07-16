@@ -1,11 +1,10 @@
-import _ from 'lodash'
+import _, { transform } from 'lodash'
 import React from 'react'
 import {View, Text} from 'react-native'
 
 const SINGLE_SERIES_WITH_NUMBERS = 0
 const SINGLE_SERIES_WITH_OBJECTS = 1
 const MULTI_SERIES = 2
-
 function flattenData (data) {
   let numberCount = 0
   let objectWithYCount = 0
@@ -74,8 +73,9 @@ export const initData = (dataProp, height, gap, numberOfPoints = 5) => {
     }
   }
 
-  max = Math.max(getMaxValue(dataProp))
+  max = getMaxValue(dataProp)
   guideArray = getGuideArray(max, height, numberOfPoints)
+  console.log('guideArray', guideArray);
 
   dataProp = flattenData(dataProp)
 
@@ -219,7 +219,7 @@ export const getGuideArray = (max, height, numberOfPoints = 5) => {
   }
 
   for (let i = 1; i < numberOfPoints + 1; i++) {
-    let v = x / numberOfPoints * i
+    let v = x / numberOfPoints * i;
     arr.push([v + postfix, v * temp / max * height, 1 * temp / max * height])
   }
 
@@ -229,47 +229,45 @@ export const getGuideArray = (max, height, numberOfPoints = 5) => {
 export const drawYAxis = (color = '#e0e0e0') => {
   return (
     <View style={{
-      borderRightWidth: 1,
+      borderRightWidth: 2,
       borderColor: color,
-      width: 1,
+      width: 2,
       height: '100%',
-      marginRight: 0
-
     }} />
-
   )
 }
 
-export const drawYAxisLabels = (arr, height, minValue, color = '#000000', symbol='') => {
+export const drawYAxisLabels = (arr, height, minValue, color = '#000000') => {
   return (
     <View style={{
-      width: 33 + 5*symbol.length,
-      height: height,
+      width: 50,
+      height: height + 2,
       justifyContent: 'flex-end',
-      alignItems: 'flex-end',
-      marginBottom: minValue && arr && arr.length > 0 ? -1 * arr[0][2] * minValue : null,
-      overflow: 'hidden'
+      alignItems: 'center',
+      backgroundColor: '#FFFFFF',
+      marginBottom: minValue && arr && arr.length > 0 ? -1 * arr[0][2] * minValue : 50,
     }}>
-
       {arr.length === 0 ? (
         <View
           key={'guide0'}
           style={{
             bottom: 0,
-            position: 'absolute'
+            position: 'absolute',
+            alignItems: 'center'
           }}>
-          <Text style={{fontSize: 11}}>0</Text>
+          <Text style={{ fontSize: 12, fontWeight: '500' }}>0</Text>
         </View>
       ) : arr.map((v, i) => {
-        if (v[1] > height-5) return null
+        const value = +v[0];
         return (
           <View
             key={'guide' + i}
             style={{
               bottom: v[1] - 5,
-              position: 'absolute'
+              position: 'absolute',
+              alignItems: 'center'
             }}>
-            <Text style={{fontSize: 11, color: color}}>{v[0] + ' ' + symbol}</Text>
+            <Text style={{fontSize: 12, fontWeight: '500', color }}>{value}</Text>
           </View>
         )
       })}
@@ -284,7 +282,6 @@ export const drawGuideLine = (arr, color = '#e0e0e0') => {
       height: '100%',
       position: 'absolute'
     }}>
-
       {arr.map((v, i) => {
         return (
           <View
@@ -325,8 +322,9 @@ export const drawXAxis = (color = '#e0e0e0') => {
   return (
     <View style={{
       width: '100%',
-      borderTopWidth: 1,
-      borderTopColor: color
+      borderTopWidth: 2,
+      borderTopColor: color,
+      zIndex: -1
     }} />
   )
 }
@@ -335,24 +333,25 @@ export const drawXAxisLabels = (sortedData, gap, color = '#000000', showEvenNumb
     <View style={{
       width: '100%',
       paddingVertical: 10,
-      height: 10
+      height: 70
     }}>
       {sortedData.map((data, i) => {
         // if (data[3] && i % 2 === 1) {
-        if (data['x'] && i % 2 === 1 || !showEvenNumberXaxisLabel) {
+        if (data['x'] || !showEvenNumberXaxisLabel) {
           return (
             <View key={'label' + i} style={{
               position: 'absolute',
-              // left: data[0] - gap / 2,
-              left: data['gap'] - gap / 2,
+              left: data['gap'] - gap / 12,
               width: gap,
-              alignItems: 'center'
+              alignItems: 'center',
+              top: 5,
+              height: 90,
+              transform: [{
+                rotateZ: 68
+              }]
             }}>
-              <Text style={{fontSize: 9, color: color}}>
-                {
-                  // data[3]
-                  data['x']
-                }
+              <Text style={{ fontSize: 10, color: color }}>
+                {data['x']}
               </Text>
             </View>
           )
