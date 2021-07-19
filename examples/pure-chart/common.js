@@ -239,11 +239,10 @@ export const drawYAxisLabels = (arr, height, minValue, color = '#000000') => {
   return (
     <View style={{
       width: 50,
-      height: height + 7,
+      height: height,
       justifyContent: 'flex-end',
       alignItems: 'center',
       backgroundColor: '#FFFFFF',
-      bottom: 7,
       marginBottom: minValue && arr && arr.length > 0 ? -1 * arr[0][2] * minValue : 50,
     }}>
       {arr.length === 0 ? (

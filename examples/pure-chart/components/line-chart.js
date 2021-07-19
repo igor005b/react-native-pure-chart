@@ -86,11 +86,11 @@ class LineChart extends React.Component {
           marginTop: topMargin,
         }, styles.coordinateWrapper])}>
           <View style={StyleSheet.flatten([{
-            top: top,
+            top: top - 1,
             width: size,
             height: size,
             borderColor: isBlank ? backgroundColor : this.props.primaryColor,
-            borderTopWidth: 1,
+            borderTopWidth: 2,
             transform: this.getTransform(angleRad, size)
           }, styles.lineBox, lineStyle])} />
           <View style={StyleSheet.flatten([styles.absolute, {
@@ -254,7 +254,6 @@ class LineChart extends React.Component {
             backgroundColor: this.props.selectedColor,
             marginLeft: gap
           }])} />
-
           <View style={StyleSheet.flatten([styles.selectedBox])}>
             {this.state.sortedData.map((series) => {
               let dataObject = series.data[this.state.selectedIndex];
@@ -289,9 +288,9 @@ class LineChart extends React.Component {
     return (
       this.state.sortedData.length > 0 ? (
         <View style={StyleSheet.flatten([styles.wrapper, {
-          backgroundColor: this.props.backgroundColor
+          backgroundColor: this.props.backgroundColor,
         }])}>
-            {drawYAxisLabels(this.state.guideArray, this.props.height + 20, this.props.minValue, this.props.labelColor)}
+            {drawYAxisLabels(this.state.guideArray, this.props.height + 22, this.props.minValue, this.props.labelColor)}
           <View>
             <ScrollView horizontal>
               <View>
