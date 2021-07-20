@@ -129,7 +129,7 @@ class LineChart extends React.Component {
               width: dx,
               height: '100%',
               position: 'absolute',
-              marginLeft: -1 * dx / 2,
+              marginLeft: 0,
               backgroundColor: '#FFFFFF01'
             }} />
           </TouchableWithoutFeedback>
@@ -292,7 +292,7 @@ class LineChart extends React.Component {
         }])}>
             {drawYAxisLabels(this.state.guideArray, this.props.height + 22, this.props.minValue, this.props.labelColor)}
           <View>
-            <ScrollView horizontal>
+            <ScrollView horizontal style={styles.scrollView}>
               <View>
 
                 <View ref='chartView' style={styles.chartViewWrapper}>
@@ -350,20 +350,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     overflow: 'hidden',
   },
+  scrollView: {
+    overflow: 'visible', 
+    zIndex: -1 
+  },
   chartViewWrapper: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     margin: 0,
     marginLeft: 5,
     paddingRight: 0,
-    overflow: 'visible'
+    overflow: 'visible',
   },
   coordinateWrapper: {
     justifyContent: 'flex-start',
     alignContent: 'flex-start'
   },
   lineBox: {
-
     justifyContent: 'flex-start'
   },
   guideLine: {
