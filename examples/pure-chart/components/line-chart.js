@@ -352,7 +352,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     overflow: 'visible', 
-    zIndex: -1 
+    zIndex: -1,
+    elevation: -1
   },
   chartViewWrapper: {
     flexDirection: 'row',
